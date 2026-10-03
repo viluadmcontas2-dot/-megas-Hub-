@@ -25,6 +25,7 @@ convertido por `tools/portmon_parse.py` (parser próprio do Hub).
 | `progbase/progbase-finish-text-51a390.bin.b64` | P idem | recurso binário do ProgBase (texto de fim) | `c093a41a83edca0c5b8e74bbf956a3857344c5485fc02ac71514eb4d9317da1d` |
 | `progbase/progbase-tautocaldm-dfm.bin.b64` | P idem | formulário AutoCal do ProgBase (DFM) | `f895c97260618505bc0c125b2013443665c78c1c7d73c335de7b372c866db04f` |
 | `progbase/mp48-k-map-physical-axes.lock.json` | P `config/` | eixos físicos do Mapa K (rpm × ms) com lock | `34e462cc89ab9c7843f56a117a8bd3c6135dc92bf8d3973d6abb44d1ca51d81d` |
+| `equivalence/parity.json` | gerado | saída do oráculo (`tools/equivalence/oracle.py cases`) nas 3 sessões reais: pontos, índice, ação e proposta nos quadros 599/1199/1999/fim — o Kotlin deve reproduzir | `1e5fb9f9602186d673115c84f1ba7316c502528a322c902b4b8ad774071f112f` |
 
 Não trazidos (decisão 2026-10-03, dono: "não precisa do portmon, só ProgBase"): os derivados Portmon da
 Platina (`tests/fixtures/portmon-*.json`, `evidence/portmon/`). O corpus Lognovo acima os substitui com

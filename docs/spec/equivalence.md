@@ -6,8 +6,9 @@ calcula em gasolina. A ECU já faz isso grosso (18 bandas de MAP, AutoMatch nati
 com mais densidade (células de 0.02 bar, ~40 células), herda a curva da ECU como ponto de partida e
 refina os 30 pontos da Curva K — só propõe; o dono grava.
 
-Oráculo: `tools/equivalence/oracle.py` (escrito do zero, P2). Kotlin (`com.omegas.hub.equivalence`)
-tem paridade bit a bit com o oráculo em `fixtures/equivalence/*.json` (gerados pelo oráculo).
+Oráculo: `tools/equivalence/oracle.py` (escrito do zero). Kotlin (`com.omegas.hub.equivalence`) tem
+paridade (1e-9; Q14 exato) com o oráculo em `fixtures/equivalence/parity.json`, gerado por
+`python3 tools/equivalence/oracle.py cases fixtures/equivalence/parity.json` sobre as 3 sessões reais.
 
 ## 1. Entradas
 
@@ -26,8 +27,8 @@ Quadros em TRANSIÇÃO, CUTOFF ou DESLIGADO não geram amostra. Em marcha lenta 
 vale só para o painel, não para equivalência (tp < 3 ms também é descartado para o cálculo).
 
 Retenção: por célula `(150 rpm × 0.02 bar)`, no máximo 30 amostras, as mais novas vencem.
-Limite total: 20 000 gasolina, 10 000 gás. Troca de curva/mapa (gravação pelo Hub ou época nova) apaga
-a pista de gás (as amostras de gasolina continuam válidas).
+Limite total: 20 000 gasolina, 10 000 gás. Troca de curva (gravação pelo Hub, época nova ou MUL_ACT diferente do snapshot anterior) ou zerar a
+aquisição de gás apaga a pista de gás (as amostras de gasolina continuam válidas).
 
 ## 3. Referência (`reference`)
 
@@ -55,20 +56,27 @@ prior p_c = interpolação linear da Referência (gasolina) ou da Referência ×
 peso do prior w_c = 1 − min(n_c / BAND_MATURE_COUNT, 1) × (1 − min(d_c / 0.08, 1) × 0.5)
 T_c = w_c · p_c + (1 − w_c) · m_c
 ```
-BAND_MATURE_COUNT = 12. Depois um ajuste **isotônico** (T cresce com MAP) em `ln T`, com rejeição
+BAND_MATURE_COUNT = 6 (uma amostra = 3 quadros estáveis; 6 amostras numa célula de 0.02 bar já pesam
+mais que o prior). Só entram no prior bandas da ECU com n ≥ PRIOR_MIN_N = 3; o prior não extrapola fora da
+faixa de MAP das suas bandas. Depois um ajuste **isotônico** (T cresce com MAP) em `ln T`, com rejeição
 robusta de outliers (|resíduo| > max(0.05, 3·MAD), até 3 passes). Célula sem amostra e sem prior = vazia.
 
 ## 5. Os 30 pontos (`points[30]`)
 
+Física: em GNV a ECU de gasolina continua calculando t_p e a ECU de gás injeta K(t_p)·t_p. Se a mistura
+sai pobre, a sonda lambda faz a ECU de gasolina **aumentar** t_p até compensar; em gasolina, no mesmo MAP,
+t_p seria menor. Logo `T_gnv(m) / T_gas(m)` mede quanto K está errado naquele MAP. K é indexado pelo t_p
+que a ECU vê **em GNV**, então o ponto i da curva corresponde ao MAP onde a curva GNV vale t_i.
+
 Para cada ponto i da curva (eixo t_i em ms de gasolina):
 
 ```
-mapEquivalente_i : MAP onde a Curva Própria de gasolina dá t_i  (inversa de T_gas(map))
-tGas_i          : tempo de gasolina que a ECU calcula em GNV nesse MAP = T_gnv(mapEquivalente_i)
-kTarget_i       : kCurrent_i × t_i / tGas_i           (quanto K deveria ser para igualar)
-mixture_i       : (kTarget_i / kCurrent_i) − 1        (+ = POBRE: falta gás; − = RICO)
-tolerance_i     : max(0.04, 2 × dispersão_i)
-usage_i         : amostras em GNV perto de t_i (±1 ponto), normalizado pelo total
+mapEquivalente_i : MAP onde a Curva Própria em GNV dá t_i   (inversa de T_gnv(map), monótona)
+tGas_i           : tempo de gasolina que a ECU calcula EM GASOLINA nesse MAP = T_gas(mapEquivalente_i)
+kTarget_i        : kCurrent_i × t_i / tGas_i          (t_i > tGas_i → GNV pobre → K sobe)
+mixture_i        : (kTarget_i / kCurrent_i) − 1       (+ = POBRE: falta gás; − = RICO)
+tolerance_i      : max(0.04, 2 × dispersão_i)
+usage_i          : amostras em GNV perto de t_i (±1 ponto), normalizado pelo total
 ```
 
 Estados:
