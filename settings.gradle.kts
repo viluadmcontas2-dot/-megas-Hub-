@@ -7,7 +7,8 @@ pluginManagement {
     }
 }
 dependencyResolutionManagement {
-    repositories { google(); mavenCentral() }
+    // JitPack só para usb-serial-for-android (único artefato fora do Maven Central/Google).
+    repositories { google(); mavenCentral(); maven { url = uri("https://jitpack.io"); content { includeGroup("com.github.mik3y") } } }
 }
 rootProject.name = "omegas-hub"
 include(":core")
