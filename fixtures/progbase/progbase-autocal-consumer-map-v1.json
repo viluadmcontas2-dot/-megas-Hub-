@@ -1,0 +1,444 @@
+{
+  "schema": "omegas.progbase.autocal-consumer-map.v1",
+  "source": {
+    "progbase": {
+      "path": "G:\\Meu Drive\\OMEGAS\\Copy of ProgBase (3).exe",
+      "sha256": "8A2D297C8C21FF3B4F7A47F7FE64593B0FEC9014DD938BD91022DC0C68AC36F4",
+      "version": "4.2.0.6"
+    },
+    "portmon": {
+      "fixture": "tests/fixtures/portmon-autocal-cycle-v1.json",
+      "source_raw_sha256": "4a70f5ae79b1d688c05bd169f3e6a588b52105580d24b8a72a5cff398a384c0b",
+      "source_zip_sha256": "a927795da5800baef53d498273f4e210bc814c2e0e3649572e6de42781073b47"
+    }
+  },
+  "live_telemetry": {
+    "command": "48 01 49",
+    "response_total_bytes": 40,
+    "payload_bytes": 34,
+    "compact_fixture_median_gap_ms": 45.844,
+    "stream_cache_base": "TStreamDati+0x293C",
+    "stream_cache_getter_va": "0x004381FC",
+    "presentation": {
+      "timer": "TimerDati",
+      "interval_ms": 75,
+      "resource_enabled": false,
+      "callback_va": "0x004A307C",
+      "note": "TimerDatiTimer directly calls TimerIOTimer at 0x00437C6C before consuming the cache. TStreamDati.TimerIO also exists as a separate resource timer at 3000 ms and is not the live UI cadence."
+    },
+    "payload_fields": [
+      {
+        "offset": 0,
+        "width": 2,
+        "encoding": "u16le",
+        "semantic": "rpm_raw"
+      },
+      {
+        "offset": 6,
+        "width": 2,
+        "encoding": "u16le",
+        "semantic": "gas_injection_raw"
+      },
+      {
+        "offset": 8,
+        "width": 2,
+        "encoding": "u16le",
+        "semantic": "petrol_injection_raw",
+        "consumer": "RunPoint.x"
+      },
+      {
+        "offset": 11,
+        "width": 1,
+        "encoding": "u8",
+        "semantic": "fuel_state"
+      },
+      {
+        "offset": 13,
+        "width": 1,
+        "encoding": "u8",
+        "semantic": "levels_raw"
+      },
+      {
+        "offset": 14,
+        "width": 2,
+        "encoding": "u16le",
+        "semantic": "gas_pressure_raw"
+      },
+      {
+        "offset": 16,
+        "width": 1,
+        "encoding": "u8",
+        "semantic": "gas_temperature_raw"
+      },
+      {
+        "offset": 17,
+        "width": 2,
+        "encoding": "s16le",
+        "semantic": "map_raw",
+        "consumer": "RunPoint.y"
+      },
+      {
+        "offset": 24,
+        "width": 2,
+        "encoding": "u16le",
+        "semantic": "gas_injection_bank2_raw"
+      },
+      {
+        "offset": 28,
+        "width": 2,
+        "encoding": "u16le",
+        "semantic": "petrol_injection_bank2_raw"
+      }
+    ],
+    "runpoint": {
+      "helper_va": "0x005158F4",
+      "caller_xref_va": "0x004A4BC9",
+      "chart": "ChartData",
+      "x_axis_title": "Petrol injection time",
+      "y_axis_title": "MAP",
+      "x_transform": "u16le(payload[8:10]) * TStreamDati[0x2980] * 0.00025 * 0.004",
+      "x_scale_parameter_status": "SYMBOLIC_SOURCE_FIELD_PROVEN_VALUE_NOT_NAMED",
+      "y_transform": "trunc_toward_zero(s16le(payload[17:19]) / 10) * 0.01",
+      "y_nominal_unit": "bar",
+      "state_selector": "0/1/2 from bit 0x10 in live state fields at form+0x1838/form+0x1700",
+      "downstream": [
+        "RunPoint",
+        "RunAxes",
+        "KRunAxes",
+        "NRunAxes",
+        "CurrentBand",
+        "PostActionRefresh"
+      ]
+    }
+  },
+  "autocal_dm": [
+    {
+      "name": "AUTO_CAL_ENABLE",
+      "serial_code": 330,
+      "address_hex": "0x014A",
+      "class": "TAebNumber",
+      "data_mask": 255,
+      "consumer": "CheckAutoCalEnable",
+      "fixture_observation": "NOT_PRESENT_IN_SELECTED_COMPACT_TRANSACTIONS"
+    },
+    {
+      "name": "PETR_INJ_TBP",
+      "serial_code": 331,
+      "address_hex": "0x014B",
+      "class": "TAebVector",
+      "data_length": 2,
+      "consumer": [
+        "KLine.x",
+        "PetrolCurve.x",
+        "GasCurve.x",
+        "AcqusitionAreas"
+      ],
+      "fixture_observation": "NOT_PRESENT_IN_SELECTED_COMPACT_TRANSACTIONS"
+    },
+    {
+      "name": "MNFLD_PRESS_THD",
+      "serial_code": 332,
+      "address_hex": "0x014C",
+      "class": "TAebVector",
+      "data_length": 2,
+      "signed": true,
+      "consumer": [
+        "CurrentBand",
+        "AcqusitionAreas"
+      ],
+      "fixture_observation": "NOT_PRESENT_IN_SELECTED_COMPACT_TRANSACTIONS"
+    },
+    {
+      "name": "NUM_BUF_UPD_PETR",
+      "serial_code": 347,
+      "address_hex": "0x015B",
+      "class": "TAebVector",
+      "data_length": 2,
+      "request": "29 5B 01 85",
+      "response_total_bytes": 43,
+      "median_gap_ms": 2063.806,
+      "consumer": "NumPetrPt/maturity"
+    },
+    {
+      "name": "NUM_BUF_UPD_GAS",
+      "serial_code": 348,
+      "address_hex": "0x015C",
+      "class": "TAebVector",
+      "data_length": 2,
+      "request": "29 5C 01 86",
+      "response_total_bytes": 43,
+      "median_gap_ms": 2008.368,
+      "consumer": "NumGasPt/maturity"
+    },
+    {
+      "name": "PETR_INJ_TBUF_GAS_PREV",
+      "serial_code": 349,
+      "address_hex": "0x015D",
+      "class": "TAebVector",
+      "data_length": 2,
+      "request": "29 5D 01 87",
+      "response_total_bytes": 43,
+      "median_gap_ms": 2020.241,
+      "consumer": "GasPointPrev.x"
+    },
+    {
+      "name": "MNFLD_PRESS_BUF_GAS_PREV",
+      "serial_code": 350,
+      "address_hex": "0x015E",
+      "class": "TAebVector",
+      "data_length": 2,
+      "signed": true,
+      "request": "29 5E 01 88",
+      "response_total_bytes": 43,
+      "median_gap_ms": 2018.945,
+      "consumer": "GasPointPrev.y"
+    },
+    {
+      "name": "PETR_INJ_TBUF_GAS",
+      "serial_code": 351,
+      "address_hex": "0x015F",
+      "class": "TAebVector",
+      "data_length": 2,
+      "request": "29 5F 01 89",
+      "response_total_bytes": 43,
+      "median_gap_ms": 2009.749,
+      "consumer": "GasPoint.x"
+    },
+    {
+      "name": "MNFLD_PRESS_BUF_GAS",
+      "serial_code": 352,
+      "address_hex": "0x0160",
+      "class": "TAebVector",
+      "data_length": 2,
+      "signed": true,
+      "request": "29 60 01 8A",
+      "response_total_bytes": 43,
+      "median_gap_ms": 2010.503,
+      "consumer": "GasPoint.y"
+    },
+    {
+      "name": "MUL_ACT",
+      "serial_code": 353,
+      "address_hex": "0x0161",
+      "class": "TAebVector",
+      "data_length": 2,
+      "request": "29 61 01 8B",
+      "response_total_bytes": 67,
+      "median_gap_ms": 1971.708,
+      "consumer": "KLine.y"
+    },
+    {
+      "name": "PETR_INJ_TBUF",
+      "serial_code": 354,
+      "address_hex": "0x0162",
+      "class": "TAebVector",
+      "data_length": 2,
+      "request": "29 62 01 8C",
+      "response_total_bytes": 43,
+      "median_gap_ms": 2066.998,
+      "consumer": "PetrolPoint.x"
+    },
+    {
+      "name": "MNFLD_PRESS_BUF",
+      "serial_code": 355,
+      "address_hex": "0x0163",
+      "class": "TAebVector",
+      "data_length": 2,
+      "signed": true,
+      "request": "29 63 01 8D",
+      "response_total_bytes": 43,
+      "median_gap_ms": 2059.304,
+      "consumer": "PetrolPoint.y"
+    },
+    {
+      "name": "VECT_AUTOCAL_U8_0_1_2",
+      "serial_code": 357,
+      "address_hex": "0x0165",
+      "class": "TAebNumber",
+      "data_mask": 255,
+      "consumer": "Finish/auxiliary AutoCal state",
+      "status": "SUBINDEX_SEMANTICS_PROVEN_FROM_PROGBASE_DFM",
+      "subindexes": {
+        "0": {
+          "component": "VECT_AUTOCAL_U8_0",
+          "fileKeyName": "AUTOCAL_IDLE_MIN_BUF_PETR_THD",
+          "wireObservation": "NOT_OBSERVED_IN_SUPPLIED_LOGNOVO_COMMAND_SET"
+        },
+        "1": {
+          "component": "VECT_AUTOCAL_U8_1",
+          "fileKeyName": "!AUTOCAL_IDLE_MIN_BUF_UPD_PETR_THD",
+          "request": "0A 65 01 01 71",
+          "lognovoTransactions": 3
+        },
+        "2": {
+          "component": "VECT_AUTOCAL_U8_2",
+          "fileKeyName": "MaxAutomatch",
+          "request": "0A 65 01 02 72",
+          "lognovoTransactions": 3
+        }
+      }
+    },
+    {
+      "name": "ACQUIRED_ZONES_PETROL",
+      "serial_code": 367,
+      "address_hex": "0x016F",
+      "class": "TAebVector",
+      "data_mask": 255,
+      "request": "29 6F 01 99",
+      "response_total_bytes": 11,
+      "median_gap_ms": 1966.836,
+      "consumer": "AcqusitionAreas"
+    },
+    {
+      "name": "ACQUIRED_ZONES_GAS",
+      "serial_code": 368,
+      "address_hex": "0x0170",
+      "class": "TAebVector",
+      "data_mask": 255,
+      "request": "29 70 01 9A",
+      "response_total_bytes": 11,
+      "median_gap_ms": 2030.338,
+      "consumer": "AcqusitionAreas"
+    },
+    {
+      "name": "NUM_AUTOMATCH_EXECUTED",
+      "serial_code": 372,
+      "address_hex": "0x0174",
+      "class": "TAebNumber",
+      "data_mask": 255,
+      "request": "09 74 01 7E",
+      "response_total_bytes": 8,
+      "consumer": "Finish/automatch count",
+      "cadence_status": "SPARSE_EVENT_DRIVEN_IN_SELECTED_FIXTURE"
+    },
+    {
+      "name": "PETR_MNFLD_PRESS_RV",
+      "serial_code": 397,
+      "address_hex": "0x018D",
+      "class": "TAebVector",
+      "data_length": 2,
+      "signed": true,
+      "request": "29 8D 01 B7",
+      "response_total_bytes": 67,
+      "median_gap_ms": 3934.289,
+      "consumer": "PetrolCurve.y"
+    },
+    {
+      "name": "GAS_MNFLD_PRESS_RV",
+      "serial_code": 398,
+      "address_hex": "0x018E",
+      "class": "TAebVector",
+      "data_length": 2,
+      "signed": true,
+      "request": "29 8E 01 B8",
+      "response_total_bytes": 67,
+      "median_gap_ms": 3924.587,
+      "consumer": "GasCurve.y"
+    }
+  ],
+  "consumers": {
+    "PollingPetrol": {
+      "class": "TShape",
+      "color": "clRed",
+      "resource_visible": false,
+      "role": "UI polling indicator positioned/toggled by PostActionRefresh",
+      "ecu_producer": null
+    },
+    "PollingGas": {
+      "class": "TShape",
+      "color": "clLime",
+      "resource_visible": false,
+      "role": "UI polling indicator positioned/toggled by PostActionRefresh",
+      "ecu_producer": null
+    },
+    "CurrentBand": {
+      "class": "THorizAreaSeries",
+      "helper_locator_va": "0x0051A614",
+      "helper_draw_va": "0x0051A51C",
+      "producer": [
+        "live RunPoint MAP",
+        "MNFLD_PRESS_THD"
+      ],
+      "role": "current MAP threshold band"
+    },
+    "AcqusitionAreas": {
+      "class": "THorizAreaSeries",
+      "helper_selector_va": "0x005171EC",
+      "helper_draw_va": "0x00517254",
+      "producer": [
+        "ACQUIRED_ZONES_PETROL",
+        "ACQUIRED_ZONES_GAS",
+        "PETR_INJ_TBP",
+        "MNFLD_PRESS_THD"
+      ]
+    },
+    "PetrolCurve": {
+      "class": "TLineSeries",
+      "producer_x": "PETR_INJ_TBP",
+      "producer_y": "PETR_MNFLD_PRESS_RV"
+    },
+    "GasCurve": {
+      "class": "TLineSeries",
+      "producer_x": "PETR_INJ_TBP",
+      "producer_y": "GAS_MNFLD_PRESS_RV"
+    }
+  },
+  "levels": {
+    "live_raw": {
+      "producer": "48 01 49 payload",
+      "offset": 13,
+      "width": 1,
+      "conversion": "NONE",
+      "state_field": "TFormConfig+0x1800"
+    },
+    "calibration": {
+      "ui": "TFormConfig/GroupRifSensore",
+      "channel_index_hex": "0x0E",
+      "getter_va": "0x00434CC0",
+      "getter_case_va": "0x00435792",
+      "cache_field": "TStreamDati+0x2BE4",
+      "setter_va": "0x00436444",
+      "setter_case_va": "0x00436F07",
+      "min_action_va": "0x004C598C",
+      "max_action_va": "0x004C5ADC",
+      "find_action_va": "0x004C5C30",
+      "word_layout": {
+        "low_byte": "learned min reference",
+        "high_byte": "learned max reference"
+      },
+      "find_rule": "interpolate four internal thresholds using step=(abs(max-min)*0.2) and multipliers 1,2,3,4; direction reverses when sensor-direction flag requires it",
+      "display_labels": [
+        "Riserva",
+        "1/4",
+        "2/4",
+        "3/4"
+      ],
+      "warning": "Do not reinterpret live raw or learned thresholds as percent, liters, m3 or cylinder fullness without independent physical calibration."
+    }
+  },
+  "enable_finish": {
+    "enable": {
+      "component": "CheckAutoCalEnable",
+      "value_binding": "AutoCalDM.AUTO_CAL_ENABLE",
+      "address_hex": "0x014A",
+      "before_set": "CheckAutoCalEnableBeforeSetData"
+    },
+    "pause": {
+      "status": "NO_SEPARATE_PAUSE_CONTROL_PROVEN"
+    },
+    "finish": {
+      "action_va": "0x0051A390",
+      "uses": [
+        "VECT_AUTOCAL_U8_2",
+        "NUM_AUTOMATCH_EXECUTED"
+      ],
+      "status": "INDEX_2_MAXAUTOMATCH_PROVEN_FROM_PROGBASE_DFM"
+    }
+  },
+  "unresolved": [
+    "Semantic name and runtime value provenance for TStreamDati+0x2980 used in injection-time scaling.",
+    "Exact runtime site that enables TimerDati after its resource default Enabled=false.",
+    "The selected compact fixture does not contain 0x014A/0x014B/0x014C reads, so their cadence is not asserted.",
+    "Runtime consumer role of VECT_AUTOCAL_U8_0 is not mapped here; its DFM FileKeyName identity is proven."
+  ]
+}

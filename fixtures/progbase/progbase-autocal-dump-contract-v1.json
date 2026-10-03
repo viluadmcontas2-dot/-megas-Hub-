@@ -1,0 +1,83 @@
+{
+  "schema": "omegas.progbase.autocal-dump.v1",
+  "classification": "ORIGINAL_DERIVED",
+  "authority": {
+    "progbase_dump_sha256": "8a2d297c8c21ff3b4f7a47f7fe64593b0fec9014dd938bd91022dc0c68ac36f4",
+    "text_sha256": "979aef013c6b507cf3153c9f7d374261a93ad1c1fa3592de033681d79bccc772",
+    "tautocaldm_sha256": "96ba3d934bf66593f919e22e37e2a90a171be5c765530e39d484ecfc16c1ee86",
+    "tautocaldm_ee_sha256": "985db334af7211c5136404444131606445ef37831f9fe3ec0d512c81128d2a10",
+    "tautocalsettings_sha256": "852de437e29e580936ff000aa49644289e455c1242d8ec9a64f35baa005e8f03",
+    "tautocalui_sha256": "449dda772b16b0d6a79c7bbd315754b37e4dbab26c129cb9346307daa2e954a7"
+  },
+  "protocol": {
+    "setVectorExtended": "37 addrLo payloadPlus2 addrHi payload checksum",
+    "resetKFactor": {
+      "handlerVa": "0x0051A070",
+      "target": "VECT_AUTOCAL_EE",
+      "serialCode": "0x0164",
+      "encoding": "U16_LE",
+      "elements": 4,
+      "physicalValue": 1,
+      "rawValue": 1,
+      "frame": "37 64 0A 01 01 00 01 00 01 00 01 00 AA"
+    },
+    "pointDelete": {
+      "petrolSerialCode": "0x016D",
+      "gasSerialCode": "0x016E",
+      "elements": 18,
+      "encoding": "U8",
+      "selected": 0,
+      "preserved": 1,
+      "hostFlow": "two_full_vectors_then_commit",
+      "commit": "01 24 05 2A"
+    }
+  },
+  "fields": {
+    "VECT_AUTOCAL_EE": {
+      "serialCode": "0x0164",
+      "elements": 4,
+      "encoding": "U16_LE"
+    },
+    "DIFF_ENG_SPD_THD": {
+      "serialCode": "0x0183",
+      "scale": 1
+    },
+    "DELTA_ENG_SPD_THD": {
+      "serialCode": "0x0184",
+      "scale": 1
+    },
+    "DIFF_MNFLD_PRESS_THD": {
+      "serialCode": "0x0185",
+      "denominator": 1024
+    },
+    "DELTA_MNFLD_PRESS_THD": {
+      "serialCode": "0x0186",
+      "denominator": 1024
+    },
+    "DIFF_PETR_TINJ_T_THD": {
+      "serialCode": "0x0187",
+      "denominator": 512
+    },
+    "DELTA_PETR_INJ_T_THD": {
+      "serialCode": "0x0188",
+      "denominator": 512
+    },
+    "DISABLE_ACQ_BAND": {
+      "serialCode": "0x018B"
+    }
+  },
+  "unresolved": {
+    "ActionGoToMinCalibrationExecute": {
+      "handlerVa": "0x005189E4",
+      "state": "UNRESOLVED_CALLBACK",
+      "rule": "do_not_invent_serial_frame"
+    }
+  },
+  "hostOnly": {
+    "ActionAutoCalRifExecute": {
+      "handlerVa": "0x005187A0",
+      "role": "Modify map refs / ChartKLine reference bounds",
+      "ecuWrite": false
+    }
+  }
+}

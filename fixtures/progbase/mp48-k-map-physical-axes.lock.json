@@ -1,0 +1,13 @@
+{
+  "status": "IMMUTABLE_PHYSICAL_CONTRACT",
+  "schema": "mp48-k-map-physical-axes-v1",
+  "address": "0x0054",
+  "writableRows": 12,
+  "protocolRows": 13,
+  "columns": 12,
+  "specialRow": "0C",
+  "rpmBins": [850, 1350, 1850, 2500, 3000, 3500, 4000, 4500, 5000, 5500, 6000, 6500],
+  "petrolMsBins": [2.0, 2.5, 3.0, 3.5, 4.5, 6.0, 8.0, 10.0, 12.0, 14.0, 16.0, 18.0],
+  "sha256": "0cc7273171fbe47a8d28235be00f1af49889d0934f6fb3c73fca35ccd2fee7c7",
+  "changePolicy": "Nova evidência física MP48 + revisão do CODEOWNER + CI verde"
+}

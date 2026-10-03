@@ -1,0 +1,46 @@
+{
+  "schema": "omegas.progbase.autocal-dump.v2",
+  "classification": "ORIGINAL_DERIVED",
+  "supersedes": "tests/fixtures/progbase-autocal-dump-contract-v1.json#protocol.resetKFactor",
+  "authority": {
+    "progbase_sha256": "8a2d297c8c21ff3b4f7a47f7fe64593b0fec9014dd938bd91022dc0c68ac36f4",
+    "handler": "ActionResetKFactorExecute",
+    "handlerVa": "0x0051A070",
+    "methodTableEvidence": "ActionResetKFactorExecute -> 0x0051A070",
+    "tautocaldmFieldOffset": "0x00A0",
+    "tautocaldmFieldName": "MUL_ACT"
+  },
+  "protocol": {
+    "resetKFactor": {
+      "target": "MUL_ACT",
+      "serialCode": "0x0161",
+      "encoding": "Q14_U16_LE",
+      "elements": 30,
+      "physicalValue": 1.0,
+      "rawValue": 16384,
+      "hostFlow": "iterate_all_elements_set_double_1_0",
+      "setterVa": "0x00979EE8",
+      "countHelperVa": "0x00513208",
+      "firstFrame": "14 61 01 00 00 40 B6",
+      "lastFrame": "14 61 01 1D 00 40 D3"
+    },
+    "pointDelete": {
+      "petrolSerialCode": "0x016D",
+      "gasSerialCode": "0x016E",
+      "elements": 18,
+      "encoding": "U8",
+      "selected": 0,
+      "preserved": 1,
+      "hostFlow": "two_full_vectors_then_commit",
+      "commit": "01 24 05 2A"
+    }
+  },
+  "separateSurface": {
+    "VECT_AUTOCAL_EE": {
+      "serialCode": "0x0164",
+      "elements": 4,
+      "encoding": "U16_LE",
+      "rule": "distinct from ActionResetKFactorExecute"
+    }
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "schema": "omegas.progbase.autocal-scale-dfm.v1",
+  "classification": "ORIGINAL_DERIVED",
+  "description": "Canonical ProgBase TAutoCalDM ttFormula coefficients for AutoCal injection-time, MAP and multiplier vectors.",
+  "source": {
+    "progbase": {
+      "file": "ProgBase-4.2.0.6.exe",
+      "sha256": "8a2d297c8c21ff3b4f7a47f7fe64593b0fec9014dd938bd91022dc0c68ac36f4",
+      "version": "4.2.0.6"
+    },
+    "extraction": {
+      "resource": "TAutoCalDM",
+      "parser": "atlas/battle/dfm_resource.py",
+      "immutableAtlasRef": "1ad8af2b249e069cee7b92f211f6678ce990de98",
+      "note": "Values below are direct serialized DFM properties from the canonical binary; decoded denominator semantics are cross-checked against MUL_ACT Q14."
+    }
+  },
+  "formulaFamily": {
+    "transformation": "ttFormula",
+    "coefficientLayout": "[1, 0, 0, denominator]",
+    "semanticCrossCheck": {
+      "field": "MUL_ACT",
+      "denominator": 16384,
+      "observedRawOne": 16384,
+      "observedPhysicalOne": 1,
+      "evidence": "Reset-K semantics plus native Q14 baseline 0x4000 establish raw/denominator for this formula family."
+    }
+  },
+  "fields": [
+    {
+      "name": "PETR_INJ_TBP",
+      "serialCode": 331,
+      "addressHex": "0x014B",
+      "dataLength": 2,
+      "precisionExtendedHex": "0ad7a3703d0ad7a3f83f",
+      "coeffsExtendedHex": [
+        "0000000000000080ff3f",
+        "00000000000000000000",
+        "00000000000000000000",
+        "00000000000000800840"
+      ],
+      "denominator": 512,
+      "physicalUnit": "ms"
+    },
+    {
+      "name": "PETR_INJ_TBUF",
+      "serialCode": 354,
+      "addressHex": "0x0162",
+      "dataLength": 2,
+      "precisionExtendedHex": "0ad7a3703d0ad7a3f83f",
+      "coeffsExtendedHex": [
+        "0000000000000080ff3f",
+        "00000000000000000000",
+        "00000000000000000000",
+        "00000000000000800840"
+      ],
+      "denominator": 512,
+      "physicalUnit": "ms"
+    },
+    {
+      "name": "PETR_INJ_TBUF_GAS",
+      "serialCode": 351,
+      "addressHex": "0x015F",
+      "dataLength": 2,
+      "precisionExtendedHex": "0ad7a3703d0ad7a3f83f",
+      "coeffsExtendedHex": [
+        "0000000000000080ff3f",
+        "00000000000000000000",
+        "00000000000000000000",
+        "00000000000000800840"
+      ],
+      "denominator": 512,
+      "physicalUnit": "ms"
+    },
+    {
+      "name": "MNFLD_PRESS_THD",
+      "serialCode": 332,
+      "addressHex": "0x014C",
+      "dataLength": 2,
+      "signed": true,
+      "precisionExtendedHex": "3bdf4f8d976e1283f53f",
+      "coeffsExtendedHex": [
+        "0000000000000080ff3f",
+        "00000000000000000000",
+        "00000000000000000000",
+        "00000000000000800940"
+      ],
+      "denominator": 1024,
+      "physicalUnit": "bar"
+    },
+    {
+      "name": "MUL_ACT",
+      "serialCode": 353,
+      "addressHex": "0x0161",
+      "dataLength": 2,
+      "precisionExtendedHex": "3bdf4f8d976e1283f53f",
+      "coeffsExtendedHex": [
+        "0000000000000080ff3f",
+        "00000000000000000000",
+        "00000000000000000000",
+        "00000000000000800d40"
+      ],
+      "denominator": 16384,
+      "physicalUnit": "factor"
+    }
+  ],
+  "epistemicBoundary": [
+    "This fixture establishes the ProgBase host-side serialized conversion for these AutoCal vectors.",
+    "It does not establish the ECU firmware's AutoMatch arithmetic.",
+    "Fast telemetry 0x48 scaling is a separate representation and must not override this vector-specific DFM evidence."
+  ]
+}

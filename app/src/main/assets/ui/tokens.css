@@ -1,0 +1,16 @@
+/* Único lugar com cor. Ver docs/spec/ux.md §1. */
+:root {
+  --bg: 8 12 18;
+  --surface: 16 23 33;
+  --surface-2: 22 31 44;
+  --stroke: 41 55 73;
+  --text: 245 248 252;
+  --text-2: 150 166 187;
+  --accent: 116 92 255;
+  --ok: 56 211 159;
+  --warn: 247 185 85;
+  --danger: 255 107 107;
+  --touch: 76px;
+  --touch-cell: 44px;
+  --text-critical: 24px;
+}
