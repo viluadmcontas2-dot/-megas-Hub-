@@ -52,7 +52,7 @@ Padrões ProgBase (`progbase-autocal-resource-defaults-v1.json`): MAX_AUTOMATCH 
 CALIBRATION_VAL_1 = `[8,4,3,20,1,6,8,3,3,7]` — a ECU real difere; vale a leitura, não o padrão.
 
 Valores reais (Lognovo) úteis como fixture do P1:
-- `29 4C 01 76` (18 limiares de MAP): `0.150, 0.250, 0.300, 0.350, 0.400, 0.450, 0.500, 0.550, 0.600,
+- `29 4C 01 76` (18 limiares de MAP): `0.150 (0x009A), 0.250, 0.300, 0.350, 0.400, 0.450, 0.500, 0.550, 0.600,
   0.650, 0.700, 0.750, 0.800, 0.850, 0.900, 0.950, 1.000, 1.100` bar.
 - `29 4B 01 75` (eixo de 30 tempos, ms): `0.5 … 10.0` em passos de 0.5 (20 valores), `11 … 18` em passos
   de 1 (8 valores), depois `20` e `22`. Fixado em `tests/test_lognovo_envelope.py`.
