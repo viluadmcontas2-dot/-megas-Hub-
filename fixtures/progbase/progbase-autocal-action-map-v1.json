@@ -1,0 +1,89 @@
+{
+  "schema": "omegas.progbase.autocal-action-map.v2",
+  "classification": "ORIGINAL_DERIVED",
+  "authority": "ProgBase 4.2.0.6 canonical EXE + Atlas raw RTTI/wrapper proof",
+  "sources": {
+    "progbase": {
+      "file": "ProgBase-4.2.0.6.exe",
+      "version": "4.2.0.6",
+      "sha256": "8a2d297c8c21ff3b4f7a47f7fe64593b0fec9014dd938bd91022dc0c68ac36f4"
+    },
+    "atlas": {
+      "proof": "atlas/proofs/behavior/action-host-mode-map.json",
+      "workflowRunId": 35809435511,
+      "artifactId": 10729032358
+    },
+    "portmon": {
+      "role": "behavioral corroboration when present; not required to establish host action identity"
+    }
+  },
+  "actions": [
+    {
+      "action": "MANUAL_AUTOMATCH",
+      "caption": "Manual automatch",
+      "handler": "ActionAutoMatchExecute",
+      "handlerVa": "0x005189B4",
+      "mode": "0x08",
+      "frame": "02 24 04 08 32",
+      "evidence": "canonical EXE raw RTTI + wrapper disassembly"
+    },
+    {
+      "action": "RESET_PETROL",
+      "caption": "Reset petrol point",
+      "handler": "ActionResetPetrolExecute",
+      "handlerVa": "0x005189C0",
+      "mode": "0x01",
+      "frame": "02 24 04 01 2B",
+      "evidence": "canonical EXE raw RTTI + wrapper disassembly"
+    },
+    {
+      "action": "RESET_GAS",
+      "caption": "Reset gas point",
+      "handler": "ActionResetGasExecute",
+      "handlerVa": "0x005189CC",
+      "mode": "0x02",
+      "frame": "02 24 04 02 2C",
+      "evidence": "canonical EXE raw RTTI + wrapper disassembly"
+    },
+    {
+      "action": "RESET_ALL",
+      "caption": "Reset all",
+      "handler": "ActionResetAllExecute",
+      "handlerVa": "0x005189D8",
+      "mode": "0x04",
+      "frame": "02 24 04 04 2E",
+      "evidence": "canonical EXE raw RTTI + wrapper disassembly; frame observed in canonical Portmon"
+    }
+  ],
+  "separateActions": {
+    "modifyMapRefs": {
+      "handler": "ActionAutoCalRifExecute",
+      "handlerVa": "0x005187A0",
+      "mode": null,
+      "frame": null,
+      "evidence": "separate complex path; not a 0x24 mode wrapper"
+    },
+    "resetKFactor": {
+      "handler": "ActionResetKFactorExecute",
+      "handlerVa": "0x0051A070",
+      "mode": null,
+      "frame": null,
+      "target": "MUL_ACT",
+      "operation": "for every element: MUL_ACT[i] = 1.0",
+      "ecuWritePath": "TAebVector.SetDouble -> SetData -> SetDataInEcu",
+      "evidence": "canonical EXE disassembly; exact IEEE-754 1.0 proven"
+    }
+  },
+  "epistemicBoundary": {
+    "exeProves": "host action identity, mode/frame map, separate K reset semantics",
+    "portmonRole": "corroborates traffic/effects when captured; absence does not negate a code-proven action",
+    "firmwareEffects": "selective internal effects of 0x01/0x02 are not invented beyond the code-proven host contract"
+  },
+  "observedEffects": {
+    "RESET_ALL_LOGNOVO": {
+      "frame": "02 24 04 04 2E",
+      "classification": "ORIGINAL_DERIVED",
+      "effect": "broad AutoCal-state reset observed in captured session"
+    }
+  }
+}

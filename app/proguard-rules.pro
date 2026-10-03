@@ -1,0 +1,2 @@
+-keep class com.hoho.android.usbserial.** { *; }
+-keepclassmembers class * { @android.webkit.JavascriptInterface <methods>; }

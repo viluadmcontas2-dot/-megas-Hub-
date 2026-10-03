@@ -1,0 +1,35 @@
+name: ci
+
+on:
+  push:
+    branches: [main, 'work/**']
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Contratos Python (clean-room, nomes proibidos, fixtures, envelope Lognovo, orçamentos)
+        run: python3 -B tools/run_checks.py
+
+      - uses: actions/setup-node@v4
+        with: { node-version: '22' }
+      - name: Testes da UI
+        run: node --test "tests/ui/**/*.test.js"
+
+      - uses: actions/setup-java@v4
+        with: { distribution: temurin, java-version: '17', cache: gradle }
+      - name: Kotlin — testes e lint
+        run: ./gradlew --no-daemon :core:test :app:testDebugUnitTest :app:lintDebug
+
+      - name: Prova
+        if: always()
+        run: echo "SHA ${{ github.sha }} · build_and_test ${{ job.status }}"

@@ -1,0 +1,138 @@
+{
+  "schema": "omegas.platinum.progbase-dump-autocal.v1",
+  "verified_at": "2026-09-28",
+  "drive": {
+    "omegas_folder_id": "1eK0IISPKFeY4FRaCDrYZcSY_zPLsWoIq",
+    "dump_folder_id": "1SMZqx2Sd1HKooJ5GVCSuYDPvkCn6R0kH"
+  },
+  "identity": {
+    "canonical_progbase_sha256": "8a2d297c8c21ff3b4f7a47f7fe64593b0fec9014dd938bd91022dc0c68ac36f4",
+    "dump_bin_sha256": "8a2d297c8c21ff3b4f7a47f7fe64593b0fec9014dd938bd91022dc0c68ac36f4",
+    "dump1_bin_sha256": "8a2d297c8c21ff3b4f7a47f7fe64593b0fec9014dd938bd91022dc0c68ac36f4",
+    "byte_identical": true
+  },
+  "resources": {
+    "TAutoCalUI": {
+      "sha256": "449dda772b16b0d6a79c7bbd315754b37e4dbab26c129cb9346307daa2e954a7",
+      "proven_symbols": [
+        "CheckAutoCalEnable",
+        "AutoCalDM.AUTO_CAL_ENABLE",
+        "ActionAutoMatch",
+        "Manual automatch",
+        "AutoCalDM.VECT_AUTOCAL_U8_2",
+        "BtnFinishAutomatchClick",
+        "ChartPointMouseMove",
+        "PollingPetrol",
+        "PollingGas",
+        "PetrolLine",
+        "GasLine",
+        "PetrolPoint",
+        "GasPointPrev",
+        "GasPoint",
+        "RunPoint",
+        "PetrolCurve",
+        "GasCurve",
+        "ActionResetAll",
+        "ActionResetGas",
+        "ActionResetPetrol",
+        "ActionResetKFactorExecute",
+        "ActionAutoCalRifExecute"
+      ]
+    },
+    "TAutoCalDM": {
+      "sha256": "96ba3d934bf66593f919e22e37e2a90a171be5c765530e39d484ecfc16c1ee86",
+      "bindings": {
+        "AUTO_CAL_ENABLE": "AutoCalEnable",
+        "VECT_AUTOCAL_U8_1": "!AUTOCAL_IDLE_MIN_BUF_UPD_PETR_THD",
+        "VECT_AUTOCAL_U8_2": "MaxAutomatch",
+        "MUL_ACT": "AutoCalMulAct",
+        "NUM_ATUOMATCH_EXECUTED": "NumAutomatchExecuted",
+        "MAX_RPM_FOR_AUTOCAL": "MaxRPMForAutocal"
+      },
+      "proven_fields": [
+        "MNFLD_PRESS_THD",
+        "PETR_INJ_TBUF",
+        "MNFLD_PRESS_BUF",
+        "NUM_BUF_UPD_PETR",
+        "PETR_INJ_TBUF_GAS_PREV",
+        "MNFLD_PRESS_BUF_GAS_PREV",
+        "PETR_INJ_TBUF_GAS",
+        "MNFLD_PRESS_BUF_GAS",
+        "NUM_BUF_UPD_GAS",
+        "MUL_ACT",
+        "GAS_POINT_2DELETE",
+        "PETROL_POINT_2DELETE",
+        "ACQUIRED_ZONES_PETROL",
+        "ACQUIRED_ZONES_GAS",
+        "PETR_MNFLD_PRESS_RV",
+        "GAS_MNFLD_PRESS_RV",
+        "DELTA_MNFLD_PRESS_THD",
+        "DIFF_MNFLD_PRESS_THD"
+      ],
+      "runtime_maturity_selectors": {
+        "low_band_max_index_inclusive": 5,
+        "zone_boundaries_inclusive": [
+          5,
+          9,
+          13
+        ],
+        "petrol_low": "VECT_AUTOCAL_U8_1",
+        "petrol_normal": "CALIBRATION_VAL_1[2]",
+        "gas_low": "CALIBRATION_VAL_1[5]",
+        "gas_normal": "CALIBRATION_VAL_1[8]",
+        "direct_disassembly": {
+          "function_va": "0x00516F64",
+          "static_boundary_va": "0x00A9DA1A",
+          "static_boundary_bytes_hex": "05 09 0D",
+          "gas_low_element": 5,
+          "gas_normal_element": 8,
+          "petrol_low_object_offset_hex": "0x78",
+          "petrol_normal_element": 2
+        }
+      }
+    },
+    "TAutoCalSettings": {
+      "sha256": "852de437e29e580936ff000aa49644289e455c1242d8ec9a64f35baa005e8f03",
+      "proven_symbols": [
+        "DELTA_MNFLD_PRESS_THD",
+        "DIFF_MNFLD_PRESS_THD",
+        "MAX_RPM_FOR_AUTOCAL",
+        "Max RPM for autocalibration",
+        "DISABLE_ACQ_BAND"
+      ]
+    },
+    "TAutoCalDM_EE": {
+      "sha256": "985db334af7211c5136404444131606445ef37831f9fe3ec0d512c81128d2a10",
+      "distinct_surface": true,
+      "proven_fields": [
+        "PETR_INJ_TBUF_GAS_EE",
+        "PETR_INJ_TBUF_GAS_PREV_EE",
+        "PETR_INJ_TBUF_PETR_EE",
+        "MNFLD_PRESS_BUF_GAS_EE",
+        "MNFLD_PRESS_BUF_GAS_PREV_EE",
+        "MNFLD_PRESS_BUF_PETR_EE",
+        "BUF_UPD_GAS_EE",
+        "BUF_UPD_PETR_EE",
+        "MUL_ACT_EE",
+        "MUL_PREV_EE",
+        "MUL_UPD_CALL_CNTR_EE",
+        "VECT_AUTOCAL_EE"
+      ]
+    }
+  },
+  "release_invariants": [
+    "VECT_AUTOCAL_U8_2_IS_MAX_AUTOMATCH",
+    "VECT_AUTOCAL_U8_1_IS_IDLE_MIN_UPDATED_PETROL_BUFFER_THRESHOLD",
+    "MATURITY_SELECTORS_MATCH_DUMP_DISASSEMBLY",
+    "NORMAL_MUL_ACT_IS_NOT_MUL_ACT_EE",
+    "RESET_K_USES_NORMAL_MUL_ACT_30_Q14_0x4000",
+    "NATIVE_AUTOMATCH_HAS_NO_HOST_AUTOMATIC_K_WRITE",
+    "PORTMON_OVERRIDES_STATIC_DUMP_FOR_RUNTIME_WIRE_ORDER",
+    "STATIC_RUNTIME_CONFLICT_FAILS_CLOSED"
+  ],
+  "distilled_oracles": {
+    "resource_defaults": "tests/fixtures/progbase-autocal-resource-defaults-v1.json",
+    "scale_dfm": "tests/fixtures/progbase-autocal-scale-dfm-v1.json",
+    "canonical_dfm_resource": "tests/fixtures/progbase-tautocaldm-dfm.bin.b64"
+  }
+}

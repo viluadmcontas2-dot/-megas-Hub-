@@ -1,0 +1,265 @@
+{
+  "schema": "omegas.progbase.autocal-resource-defaults.v1",
+  "classification": "ORIGINAL_DERIVED",
+  "authority": "ProgBase 4.2.0.6 + Resources.dll static resource/decrypt disassembly",
+  "sources": {
+    "progbase": {
+      "file": "ProgBase (3).exe",
+      "sha256": "8a2d297c8c21ff3b4f7a47f7fe64593b0fec9014dd938bd91022dc0c68ac36f4"
+    },
+    "resources": {
+      "file": "Resources.dll",
+      "sha256": "8c6b629cf1d69e13074ea8fd3203d48343d002a2ffc5503f20b6ce10ec564b15"
+    }
+  },
+  "mltpDecrypt": {
+    "resourceType": 256,
+    "resourceCount": 141,
+    "encryptedMagic": "ENCRYPTED_MLTP_FILE",
+    "decryptedMagic": "DECRYPTED_MLTP_FILE",
+    "progbaseKeySetterVa": "0x0042CA64",
+    "progbaseDecryptVa": "0x0042CC48",
+    "resourcesGetPassVa": "0x0040141C",
+    "resourcesInitPersVa": "0x0040131C",
+    "resourcesPassTransformVa": "0x004012E4",
+    "key": "AEBXLANDIRENZO03",
+    "keyDerivation": "dst[0]=src[0]; dst[i]=(src[i]+dst[i-1])&0xFF until NUL, max 16 recurrence steps",
+    "payloadTransform": "plain[i]=cipher[i] XOR ((key[i mod keyLen] << (i mod 5)) & 0xFF)",
+    "note": "The embedded type-0x100 resources decrypt to MLTP INI-style calibration/configuration files. This fixture does not classify them as ECU firmware."
+  },
+  "autocalResources": {
+    "ids": [
+      2305,
+      2306,
+      2307,
+      2308,
+      2309,
+      2310,
+      2311,
+      2312
+    ],
+    "names": {
+      "2305": "valtek37_LPG_aspirato.lec",
+      "2306": "valtek37_CNG_aspirato.lec",
+      "2307": "valtek37_LPG_turbo.lec",
+      "2308": "valtek37_CNG_turbo.lec",
+      "2309": "valtek37_LPG_aspirato.lrc",
+      "2310": "valtek37_CNG_aspirato.lrc",
+      "2311": "valtek37_LPG_turbo.lrc",
+      "2312": "valtek37_CNG_turbo.lrc"
+    },
+    "shared": {
+      "maxAutomatch": 3,
+      "maxRpmForAutocal": 3000,
+      "petrolAxisMs": [
+        1.5,
+        2,
+        2.5,
+        3,
+        3.5,
+        4,
+        4.5,
+        5,
+        5.5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        12,
+        14,
+        16,
+        18
+      ],
+      "calibrationVal1": [
+        8,
+        4,
+        3,
+        20,
+        1,
+        6,
+        8,
+        3,
+        3,
+        7
+      ],
+      "idleMinBufPetr": 1,
+      "idleMinBufUpdPetr": 6,
+      "initialMul": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "aspirated": {
+      "pressureMin": 0.25,
+      "pressureMax": 0.849609,
+      "mapThresholdBar": [
+        0.2,
+        0.3,
+        0.35,
+        0.4,
+        0.5,
+        0.55,
+        0.6,
+        0.63,
+        0.66,
+        0.7,
+        0.735,
+        0.765,
+        0.8,
+        0.85,
+        0.88,
+        0.9,
+        0.95,
+        1
+      ],
+      "deltaEngSpdThd": 100,
+      "diffEngSpdThd": 80,
+      "enCdnTThd": 1
+    },
+    "turbo": {
+      "pressureMin": 0.25,
+      "pressureMax": 1.59961,
+      "mapThresholdBar": [
+        0.2,
+        0.3,
+        0.35,
+        0.4,
+        0.5,
+        0.55,
+        0.65,
+        0.75,
+        0.85,
+        0.9,
+        1.1,
+        1.2,
+        1.3,
+        1.5,
+        1.65,
+        1.7,
+        1.9,
+        2.2
+      ],
+      "deltaEngSpdThd": 80,
+      "diffEngSpdThd": 80,
+      "enCdnTThd": 0.3
+    }
+  },
+  "calibrationGrid": {
+    "rowOrder": [
+      {
+        "row": 0,
+        "semantic": "AutoCalIdleMinBufPetrThd",
+        "source": "VECT_AUTOCAL_U8_0",
+        "default": 1
+      },
+      {
+        "row": 1,
+        "semantic": "AutoCalIdleMinBufUpdPetrThd",
+        "source": "VECT_AUTOCAL_U8_1",
+        "default": 6
+      },
+      {
+        "row": 2,
+        "semantic": "AutoCalIdleSumBufPetrThd",
+        "source": "CALIBRATION_VAL_1[0]",
+        "default": 8
+      },
+      {
+        "row": 3,
+        "semantic": "AutoCalIdleMinBufGasThd",
+        "source": "CALIBRATION_VAL_1[4]",
+        "default": 1
+      },
+      {
+        "row": 4,
+        "semantic": "AutoCalIdleMinBufUpdGasThd",
+        "source": "CALIBRATION_VAL_1[5]",
+        "default": 6
+      },
+      {
+        "row": 5,
+        "semantic": "AutoCalIdleSumBufGasThd",
+        "source": "CALIBRATION_VAL_1[6]",
+        "default": 8
+      },
+      {
+        "row": 6,
+        "semantic": "AutoCalMinBufPetrThd",
+        "source": "CALIBRATION_VAL_1[1]",
+        "default": 4
+      },
+      {
+        "row": 7,
+        "semantic": "AutoCalMinBufUpdPetrThd",
+        "source": "CALIBRATION_VAL_1[2]",
+        "default": 3
+      },
+      {
+        "row": 8,
+        "semantic": "AutoCalSumBufPetrThd",
+        "source": "CALIBRATION_VAL_1[3]",
+        "default": 20
+      },
+      {
+        "row": 9,
+        "semantic": "AutoCalMinBufGasThd",
+        "source": "CALIBRATION_VAL_1[7]",
+        "default": 3
+      },
+      {
+        "row": 10,
+        "semantic": "AutoCalMinBufUpdGasThd",
+        "source": "CALIBRATION_VAL_1[8]",
+        "default": 3
+      },
+      {
+        "row": 11,
+        "semantic": "AutoCalSumBufGasThd",
+        "source": "CALIBRATION_VAL_1[9]",
+        "default": 7
+      }
+    ],
+    "runtimeMaturitySelectors": {
+      "zoneBoundariesInclusive": [
+        5,
+        9,
+        13
+      ],
+      "petrolLow": "VECT_AUTOCAL_U8_1",
+      "petrolNormal": "CALIBRATION_VAL_1[2]",
+      "gasLow": "CALIBRATION_VAL_1[5]",
+      "gasNormal": "CALIBRATION_VAL_1[8]",
+      "evidence": "ProgBase disassembly around 0x00516F64 plus AutoCalDM RTTI field offsets"
+    }
+  },
+  "epistemicBoundary": {
+    "proves": [
+      "MLTP resource decryption path and key",
+      "eight embedded AutoCal calibration resources and their default parameters",
+      "idle-vs-normal acquisition parameter split",
+      "native four-zone boundary constants 5/9/13 and maturity threshold selectors"
+    ],
+    "doesNotProve": [
+      "exact ECU AutoMatch arithmetic",
+      "that embedded .lec/.lrc resources are firmware",
+      "that these 18-point defaults are byte-identical to the current MODULE_VERSION=4 30-point ECU configuration"
+    ]
+  }
+}
