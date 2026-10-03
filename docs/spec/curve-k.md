@@ -10,8 +10,8 @@ readback), ProgBase.
   tempo de gasolina para injetar gás naquele ponto.
 - Leitura: `29 61 01 8B` → eco + `53` + `3C` (LEN 60) + 60 bytes (30 × U16 LE) + ck.
   Eixo: `29 4B 01 75` → LEN 60 idem.
-- Resposta real Lognovo (`29 61 01 8B`): começa `B1 35 AE 35 A9 35 B6 33 …` → 0.8206, 0.8198, 0.8186,
-  0.8080 … (fatores entre ~0.80 e ~1.33 nesta ECU). Eixo real: 0.5 → 10.0 ms em passos de 0.5 ms,
+- Resposta real Lognovo (`29 61 01 8B`): começa `B1 35 AE 35 A9 35 B6 33 …` → 0x35B1 = 0.839, 0x35AE = 0.839,
+  0x35A9 = 0.838, 0x33B6 = 0.808 … (fatores entre ~0.80 e ~1.33 nesta ECU). Eixo real: 0.5 → 10.0 ms em passos de 0.5 ms,
   11 → 18 ms em passos de 1 ms, depois 20 e 22 ms (ver `autocal.md`).
 
 ## 2. Escrita de um ponto
